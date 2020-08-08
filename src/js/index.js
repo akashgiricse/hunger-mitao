@@ -1,5 +1,5 @@
 import num from "./test";
 
-console.log("hiiiiii htereeeeee");
+const x = 222;
 
-console.log("num is ", num);
+console.log(`num is ${num} and constant x is ${x}`);
