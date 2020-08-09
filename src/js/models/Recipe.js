@@ -10,11 +10,26 @@ export default class Recipe {
       const res = await axios(
         `https://forkify-api.herokuapp.com/api/get?rId=${this.id}`
       );
-      console.log(res);
-      //   this.result = res.data.recipes;
-      //   console.log(this.result);
+
+      this.title = res.data.recipe.title;
+      this.author = res.data.recipe.publisher;
+      this.img = res.data.recipe.image_url;
+      this.url = res.data.recipe.source_url;
+      this.ingredients = res.data.recipe.ingredients;
     } catch (err) {
-      throw new Error(err);
+      console.log(err);
+      alert("Something went wrong :(");
     }
+  }
+
+  // Calculate cooking time. 15 minutes for 3 ingredients
+  calcCookingTime() {
+    const numIng = this.ingredients.length;
+    const periods = Math.ceil(numIng / 3);
+    this.time = periods * 3;
+  }
+
+  calcServings() {
+    this.servings = 4;
   }
 }
