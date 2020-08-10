@@ -23,7 +23,6 @@ import * as likesView from "./views/likesView";
  */
 
 const state = {};
-window.state = state;
 
 /**
  * Search controller
@@ -70,10 +69,6 @@ elements.searchResPages.addEventListener("click", (e) => {
 /**
  * Recipe controller
  */
-
-// todo: remov this below line
-state.likes = new Likes();
-likesView.toggleLikesMenu(state.likes.getNumLikes());
 
 const controlRecipe = async () => {
   // Get ID from url
@@ -181,6 +176,21 @@ const controlLike = () => {
 
   likesView.toggleLikesMenu(state.likes.getNumLikes());
 };
+
+// Restore likes when windows relaods
+window.addEventListener("load", () => {
+  state.likes = new Likes();
+
+  // Restore likes from storage
+  state.likes.readStorage();
+  // Toggle buttons
+  likesView.toggleLikesMenu(state.likes.getNumLikes());
+
+  // Render existing likes
+  state.likes.likes.forEach((like) => {
+    likesView.renderLike(like);
+  });
+});
 
 // Handling recipe button click
 elements.recipe.addEventListener("click", (e) => {
